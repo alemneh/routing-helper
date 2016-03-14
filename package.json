@@ -1,0 +1,30 @@
+{
+  "name": "routing-helper",
+  "version": "1.0.0",
+  "description": "routing framework",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alemneh/routing-helper.git"
+  },
+  "author": "alumneh asefa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alemneh/routing-helper/issues"
+  },
+  "homepage": "https://github.com/alemneh/routing-helper#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0",
+    "gulp-mocha": "^2.2.0"
+  }
+}

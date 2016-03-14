@@ -6,15 +6,14 @@ var fs = require('fs');
 var counter = 0;
 
 BoxersRouter.get('/boxers', (req, res) => {
-  console.log(req.params);
   res.writeHead(200, {'content-type': 'text/html'});
   fs.readdir('data', (err, files) => {
-    res.write('Current active boxers: \n');
+    var num = files.length;
+    res.write('Current active boxers'+num+': \n');
     if(err) throw err;
     files.forEach( (file) => {
       fs.readFile('data/' + file, 'utf8', (err, data) => {
         if(err) throw err;
-        console.log(data);
         res.write(JSON.parse(data).boxer + '\n');
         counter++;
         if(counter == files.length){
@@ -23,9 +22,10 @@ BoxersRouter.get('/boxers', (req, res) => {
       }); // end readFile
     });// end forEach
   });// end readdir
-});
+});// end GET
 
-BoxersRouter.post('/boxers', (req, res) => {
+BoxersRouter.post('/boxers/active', (req, res) => {
+  res.writeHead(200, {'content-type': 'text/html'});
   req.on('data', (data) => {
     var boxer = JSON.parse(data).boxer;
     fs.writeFile('data/' + boxer + '.json', data, (err) => {
@@ -35,24 +35,34 @@ BoxersRouter.post('/boxers', (req, res) => {
       return res.end();
     });// end writeFile
   });// end on data
-});
+});// end POST
 
-BoxersRouter.put('/boxers', (req, res) => {
-  console.log('/boxers PUT route hit');
+BoxersRouter.put('/boxers/active', (req, res) => {
+  res.writeHead(200, {'content-type': 'text/html'});
+  req.on('data', (data) => {
+    var boxer = JSON.parse(data).boxer;
+    fs.writeFile('data/' + boxer + '.json', data, (err) => {
+      if(err) throw err;
+      res.writeHead(200, {'content-type': 'text/html'});
+      res.write(boxer+' was updated in the roster');
+      return res.end();
+    });// end writeFile
+  });// end on data
+});// end PUT
 
-  res.end();
-});
 
-
-BoxersRouter.delete('/boxers/mayweather', (req, res) => {
-  var record = req.url.slice(8);
-  fs.unlink('data/'+record+'.json', (err) => {
-    if(err) throw err;
-    res.writeHead(200, {'content-type': 'text/html'});
-    res.write(record+' was deleted from the roster');
-    return res.end();
-  });
-});
+BoxersRouter.delete('/boxers/active', (req, res) => {
+  res.writeHead(200, {'content-type': 'text/html'});
+  req.on('data', (data) => {
+    var fighter = JSON.parse(data).boxer;
+    fs.unlink('data/'+fighter+'.json', (err) => {
+      if(err) throw err;
+      res.writeHead(200, {'content-type': 'text/html'});
+      res.write(fighter+' was deleted from the roster');
+      return res.end();
+    });// end unlink
+  });// end data
+});// end DELETE
 
 
 http.createServer(BoxersRouter.route()).listen(3000, () => {

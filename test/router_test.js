@@ -2,13 +2,37 @@
 const chai = require('chai');
 const chaiHTTP = require('chai-http');
 const fs = require('fs');
+const Router = require('../lib/router-helper');
+const BoxerRouter = new Router();
 chai.use(chaiHTTP);
 
 var request = chai.request;
 var expect = chai.expect;
 require('../server');
 
+
 describe('Routing framework', () => {
+  describe('Requiring routing-helper module and creating an instance', () => {
+    it('BoxerRouter should be an instanceof Router', (done) => {
+      expect(BoxerRouter).to.be.instanceof(Router);
+      expect(typeof BoxerRouter.get).to.eql('function');
+      expect(typeof BoxerRouter.post).to.eql('function');
+      expect(typeof BoxerRouter.put).to.eql('function');
+      expect(typeof BoxerRouter.delete).to.eql('function');
+
+      done();
+    });
+  });
+  describe('Router methods for HTTP request', () => {
+    it('should have methods for each HTTP verb that are functions', (done) => {
+      expect(typeof BoxerRouter.get).to.eql('function');
+      expect(typeof BoxerRouter.post).to.eql('function');
+      expect(typeof BoxerRouter.put).to.eql('function');
+      expect(typeof BoxerRouter.delete).to.eql('function');
+
+      done();
+    });
+  });
   describe('Invoking .post() method', () => {
     it('should recive a POST request and add a new fighter', (done) => {
       request('localhost:3000')

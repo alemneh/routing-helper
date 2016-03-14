@@ -1,8 +1,7 @@
 # routing-helper
 This is a framework for routing
 
-Features
-HTTP verbs
+Features: HTTP verbs
 
 ##Installation
 

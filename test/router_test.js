@@ -15,10 +15,6 @@ describe('Routing framework', () => {
   describe('Requiring routing-helper module and creating an instance', () => {
     it('BoxerRouter should be an instanceof Router', (done) => {
       expect(BoxerRouter).to.be.instanceof(Router);
-      expect(typeof BoxerRouter.get).to.eql('function');
-      expect(typeof BoxerRouter.post).to.eql('function');
-      expect(typeof BoxerRouter.put).to.eql('function');
-      expect(typeof BoxerRouter.delete).to.eql('function');
 
       done();
     });
